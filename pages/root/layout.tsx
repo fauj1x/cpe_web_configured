@@ -3,7 +3,7 @@
 import React from 'react';
 import Sidebar from '../../layouts/sidebar'; // Adjust the import path as necessary
 import { Poppins } from "next/font/google";
-import "../root/root.css";
+// import "../styles/root.module.css";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import AOS from "aos"; // Mengimpor AOS

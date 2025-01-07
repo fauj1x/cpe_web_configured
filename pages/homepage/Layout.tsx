@@ -1,7 +1,7 @@
 "use client"; // Ini menandakan bahwa file ini adalah Client Component
 
 import { Poppins } from "next/font/google";
-import "../homepage/module.css";
+// import "../styles/homepage.module.css";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import AOS from "aos"; // Mengimpor AOS

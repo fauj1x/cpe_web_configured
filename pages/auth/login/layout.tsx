@@ -1,6 +1,6 @@
 "use client";
 
-import "pages/auth/login/auth.css";
+// import "../../styles/auth.module.css";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
