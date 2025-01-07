@@ -24,10 +24,6 @@ const ArticlePage = ({
 
   const slug = slugify(title).toLowerCase();
 
-  // const ogImage = `https://www.phung.io/api/og-image?title=${encodeURIComponent(
-  //   title
-  // )}&date=${encodeURIComponent(publishedOn)}`;
-
   const ogImage = `${siteData.websiteUrl}/api/og-image?title=${encodeURIComponent(
     title
   )}&date=${encodeURIComponent(publishedOn)}`;
@@ -104,19 +100,27 @@ const ArticlePage = ({
   );
 };
 
-export const getStaticPaths = async () => {
-  const paths = [];
-  const data: any = await getAllArticles(process.env.BLOG_DATABASE_ID);
+const createSlug = (title: string) => {
+  return slugify(title, {
+    lower: true,
+    remove: /[*+~.()'"!:@]/g // Tambahkan karakter yang tidak valid di sini
+  }).replace(/[:]/g, ''); // Ganti titik dua dengan string kosong
+};
 
-  data.forEach(result => {
-    if (result.object === 'page') {
-      paths.push({
-        params: {
-          slug: slugify(result.properties.title.title[0].plain_text).toLowerCase()
-        }
-      });
+export const getStaticPaths = async () => {
+  const data: any = await getAllArticles(process.env.BLOG_DATABASE_ID);
+  const paths = data.map((result: any) => {
+    const title = result.properties?.title?.title?.[0]?.plain_text;
+    if (!title) {
+      console.error('Title is missing for result:', result);
+      return null;
     }
-  });
+    return {
+      params: {
+        slug: createSlug(title)
+      }
+    };
+  }).filter(Boolean); // Filter out null values
 
   return {
     paths,
@@ -127,14 +131,23 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params: { slug } }) => {
   const data = await getAllArticles(process.env.BLOG_DATABASE_ID);
 
+  if (!data) {
+    console.error("Failed to fetch data");
+    return { notFound: true };
+  }
+
   const page = getArticlePage(data, slug);
+  
+  if (!page) {
+    return { notFound: true };
+  }
+
   const result = await getArticlePageData(page, slug, process.env.BLOG_DATABASE_ID);
 
   return {
     props: result,
-    revalidate: 60 * 60
+    revalidate: 60 * 60,
   };
 };
-
 
 export default ArticlePage;

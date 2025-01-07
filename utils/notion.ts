@@ -69,7 +69,7 @@ export const getMoreArticlesToSuggest = async (databaseId, currentArticleTitle) 
         },
         {
           property: 'title',
-          text: {
+          title: {
             does_not_equal: currentArticleTitle
           }
         }

@@ -8,34 +8,36 @@ export function renderBlocks(block) {
   const { type, id } = block;
   const value = block[type];
 
+  console.log('Rendering block:', block); // Tambahkan log ini untuk memeriksa data blok
+
   switch (type) {
     case 'paragraph':
       return (
         <p className="leading-[28px] text-lg">
-          <Text text={value.text} />
+          <Text text={value.rich_text} />
         </p>
       );
     case 'heading_1':
       return (
         <div className="pt-16 text-3xl font-semibold">
-          <AnchorLink text={value.text[0].text.content}>
-            <Text text={value.text} />
+          <AnchorLink text={value.rich_text[0]?.text?.content || ''}>
+            <Text text={value.rich_text} />
           </AnchorLink>
         </div>
       );
     case 'heading_2':
       return (
         <div className="pt-8 text-2xl font-semibold">
-          <AnchorLink text={value.text[0].text.content}>
-            <Text text={value.text} />
+          <AnchorLink text={value.rich_text[0]?.text?.content || ''}>
+            <Text text={value.rich_text} />
           </AnchorLink>
         </div>
       );
     case 'heading_3':
       return (
         <div className="pt-8 text-xl font-semibold">
-          <AnchorLink text={value.text[0].text.content}>
-            <Text text={value.text} />
+          <AnchorLink text={value.rich_text[0]?.text?.content || ''}>
+            <Text text={value.rich_text} />
           </AnchorLink>
         </div>
       );
@@ -43,7 +45,7 @@ export function renderBlocks(block) {
     case 'numbered_list_item':
       return (
         <li className="text-lg">
-          <Text text={value.text} />
+          <Text text={value.rich_text} />
         </li>
       );
     case 'to_do':
@@ -52,14 +54,14 @@ export function renderBlocks(block) {
           <label htmlFor={id} className="flex items-center justify-start space-x-3">
             <input
               id={id}
-              aria-describedby={value.text}
+              aria-describedby={value.rich_text}
               name={id}
               type="checkbox"
               checked={value?.checked}
               readOnly
               className="w-4 h-4 text-teal-500 border-gray-300 rounded focus:ring-teal-500"
             />
-            <Text text={value.text} />
+            <Text text={value.rich_text} />
           </label>
         </div>
       );
@@ -67,7 +69,7 @@ export function renderBlocks(block) {
       return (
         <details>
           <summary>
-            <Text text={value.text} />
+            <Text text={value.rich_text} />
           </summary>
           {value.children?.map(block => (
             <Fragment key={block.id}>{renderBlocks(block)}</Fragment>
@@ -99,7 +101,7 @@ export function renderBlocks(block) {
         <CodeBlock
           language={value.language}
           caption={value.caption.length >= 1 && value.caption[0].plain_text}
-          code={value.text[0].text.content}
+          code={value.rich_text[0]?.text?.content || ''}
         />
       );
     case 'callout':
@@ -107,7 +109,7 @@ export function renderBlocks(block) {
         <div className="flex p-3 space-x-4 bg-gray-100 rounded-lg">
           {value.icon && <span className="text-2xl">{value.icon.emoji}</span>}
           <div className="leading-[28px] text-base">
-            <Text text={value.text} />
+            <Text text={value.rich_text} />
           </div>
         </div>
       );
@@ -129,7 +131,7 @@ export function renderBlocks(block) {
     case 'quote':
       return (
         <blockquote className="p-4 rounded-r-lg bg-gray-50">
-          <Text text={value.text} />
+          <Text text={value.rich_text} />
         </blockquote>
       );
     case 'divider':
