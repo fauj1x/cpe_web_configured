@@ -7,6 +7,10 @@ type Props = {
   article: Article;
 };
 
+interface ArticleProps {
+  id: String;
+}
+
 export default function ArticleCard({ article }: Props) {
   const slug = slugify(article.title).toLowerCase();
 
@@ -55,7 +59,7 @@ export default function ArticleCard({ article }: Props) {
               ))}
               <time dateTime={formattedTime}>{formattedTime}</time>
             </div>
-            {/* <p className="text-sm font-medium text-gray-900">{article?.author?.name}</p> */}
+            <p className="text-sm font-medium text-gray-900">{article?.author?.name}</p>
           </div>
         </div>
       </div>

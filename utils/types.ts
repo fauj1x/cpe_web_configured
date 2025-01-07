@@ -1,4 +1,5 @@
 export type Article = {
+  author: any;
   title: string;
   categories?: Array<string>;
   thumbnail: string;

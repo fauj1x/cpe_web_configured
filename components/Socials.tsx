@@ -9,9 +9,9 @@ export default function Socials() {
       icon: '/socials/twitter.svg'
     },
     {
-      name: 'GitHub',
+      name: 'instagram',
       href: siteData?.github,
-      icon: '/socials/github.svg'
+      icon: '/socials/instagram.svg'
     },
     {
       name: 'LinkedIn',
