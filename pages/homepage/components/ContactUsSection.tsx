@@ -35,7 +35,7 @@ const ContactUsSection = ({id}: ContactUsSectionProps) => {
             </div>
             <div className="p-2 w-full">
   <a
-    href="https://api.whatsapp.com/+6288217842008"
+    href="https://api.whatsapp.com/send?phone=6289601480086"
     className="flex mx-auto text-white bg-yellow-600 border-0 py-2 px-8 focus:outline-none hover:bg-yellow-800 rounded text-lg"
   >
     Contact Us

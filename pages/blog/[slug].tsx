@@ -126,25 +126,13 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params: { slug } }) => {
   const data = await getAllArticles(process.env.BLOG_DATABASE_ID);
-  const page = getArticlePage(data, slug);
-  
-  if (!page || !page.content) {
-    return {
-      notFound: true, // Tangani data yang tidak ditemukan
-    };
-  }
 
+  const page = getArticlePage(data, slug);
   const result = await getArticlePageData(page, slug, process.env.BLOG_DATABASE_ID);
-  
-  if (!result.content || result.content.length === 0) {
-    return {
-      notFound: true, // Tangani konten yang hilang
-    };
-  }
 
   return {
     props: result,
-    revalidate: 60 * 60,
+    revalidate: 60 * 60
   };
 };
 
